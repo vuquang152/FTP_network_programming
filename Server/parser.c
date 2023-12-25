@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2022
+** parser.c
+** File description:
+** parser.c
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

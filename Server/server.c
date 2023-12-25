@@ -1,19 +1,19 @@
-#ifdef _WIN32
-    #include <winsock2.h>
-    #include <ws2tcpip.h>
-#else
-    #include <sys/socket.h>
-    #include <netinet/in.h>
-    #include <arpa/inet.h>
-    #include <dirent.h>
-    #include <unistd.h>
-    #include <string.h>
-    #include <stdio.h>
-    #include <stdlib.h>
-#endif
+/*
+** EPITECH PROJECT, 2022
+** main.c
+** File description:
+** main.c
+*/
+
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "../include/server.h"
 #include "../include/response_messages.h"
-
 
 int bind_port(int port, int sockfd, int end_port)
 {
@@ -54,6 +54,7 @@ const char *response_messages[14] = {
 
 int main(int ac, char **av)
 {
+    printf("Server started\n");
     srv_s *srv = NULL;
     if (ac == 2 && strcmp(av[1], "-help") == 0) {
         printf("USAGE: "
@@ -68,6 +69,8 @@ int main(int ac, char **av)
     chdir(av[2]);
     srv->port = atoi(av[1]);
     srv->max_pending_connections = 10;
+
+    printf("port %d\n", srv->port);
     server(srv);
     return 0;
 }

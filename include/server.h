@@ -6,16 +6,8 @@
 */
 
 #pragma once
-#ifdef _WIN32
-    #include <winsock2.h>
-    #include <ws2tcpip.h>
-    #include <dirent.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#else
-    #include <dirent.h>
+
+#include <dirent.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -23,8 +15,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#endif
-
 
 typedef struct srv_t {
     int port;

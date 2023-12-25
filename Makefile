@@ -1,38 +1,42 @@
-
 CC = gcc
 
-SRC = 	Server/server.c  \
-		Server/parser.c  \
-		Server/passive_mode.c \
-		Server/active_mode.c \
-		Server/server_accept_send_receive.c \
-		Server/server_functions.c \
-		Server/commands/basic_commands.c \
-		Server/commands/list_functions.c \
-		Server/commands/download_upload.c \
-		Server/commands/get_nb_files.c \
-		Server/commands/delete_noop.c \
-		Server/commands/user_pass.c
+SERVER_SRC = Server/server.c  \
+             Server/parser.c  \
+             Server/passive_mode.c \
+             Server/active_mode.c \
+             Server/server_accept_send_receive.c \
+             Server/server_functions.c \
+             Server/commands/basic_commands.c \
+             Server/commands/list_functions.c \
+             Server/commands/download_upload.c \
+             Server/commands/get_nb_files.c \
+             Server/commands/delete_noop.c \
+             Server/commands/user_pass.c
 
-OBJS = $(SRC:.c=.o)
+CLIENT_SRC = Client/client.c
+
+SERVER_OBJS = $(SERVER_SRC:.c=.o)
+CLIENT_OBJS = $(CLIENT_SRC:.c=.o)
 
 RM = rm -f
 
 CFLAGS = -Wall -Wextra -Werror -I ./include
-LDFLAGS = -lws2_32
 
+SERVER_NAME = myftp_server
+CLIENT_NAME = myftp_client
 
-NAME = myftp
+all: $(SERVER_NAME) $(CLIENT_NAME)
 
-all: $(NAME)
+$(SERVER_NAME): $(SERVER_OBJS)
+	$(CC) $(CFLAGS) -o $(SERVER_NAME) $(SERVER_OBJS)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDFLAGS)
+$(CLIENT_NAME): $(CLIENT_OBJS)
+	$(CC) $(CFLAGS) -o $(CLIENT_NAME) $(CLIENT_OBJS)
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(SERVER_OBJS) $(CLIENT_OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(SERVER_NAME) $(CLIENT_NAME)
 
 re: fclean all

@@ -1,31 +1,23 @@
-#ifdef _WIN32
-    #include <winsock2.h>
-    #include <sys/stat.h>
-    #include <io.h>
-    #ifndef S_ISREG
-        #define S_ISREG(m) (((m) & _S_IFMT) == _S_IFREG)
-    #endif
-    #define STAT_FUNC _stat
-#else
-    #include <sys/stat.h>
-    #ifndef S_ISREG
-        #define S_ISREG(m) (((m) & S_IFMT) == S_IFREG)
-    #endif
-    #define STAT_FUNC stat
-    #include <sys/stat.h>
-    #include <stdio.h>
-    #include <stdlib.h>
-    #include <string.h>
-    #include <unistd.h>
-    #include <errno.h>
-    #include <fcntl.h>
-#endif
+/*
+** EPITECH PROJECT, 2022
+** delete and noop.c
+** File description:
+** delete and noop.c
+*/
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <errno.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include "../../include/server.h"
 #include "../../include/response_messages.h"
 
 int delete_file(const char *filename, srv_s *srv)
 {
+    struct stat st;
     int result;
 
     filename = strtok(NULL, " ");
@@ -33,10 +25,7 @@ int delete_file(const char *filename, srv_s *srv)
     if (filename == NULL)
         return -1;
     srv->filename = filename;
-
-    struct _stat st;  // Use struct _stat for Windows
-
-    if (STAT_FUNC(filename, &st) != 0 || !S_ISREG(st.st_mode)) {
+    if (stat(filename, &st) != 0 || !S_ISREG(st.st_mode)) {
         return -1;
     }
     result = unlink(filename);
@@ -47,7 +36,6 @@ int delete_file(const char *filename, srv_s *srv)
 }
 
 void handle_dele(const struct sockaddr_in *client_address, int client_socket,
-
                 const char *client_ip, srv_s *srv)
 {
     if (srv->is_connected == 0) {
