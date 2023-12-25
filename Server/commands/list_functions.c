@@ -1,7 +1,10 @@
-#ifdef _WIN32
-    #include <winsock2.h>
-    #include <ws2tcpip.h>
-#else
+/*
+** EPITECH PROJECT, 2022
+** list_functions.c
+** File description:
+** list_functions.c
+*/
+
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -9,7 +12,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#endif
 #include "../../include/server.h"
 #include "../../include/response_messages.h"
 

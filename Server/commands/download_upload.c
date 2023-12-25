@@ -1,40 +1,12 @@
+/*
+** EPITECH PROJECT, 2022
+** download_upload.c
+** File description:
+** download_upload.c
+*/
+
 #include "../../include/server.h"
 #include "../../include/response_messages.h"
-#include <stdio.h>
-#include <stdlib.h>
-
-ssize_t custom_getline(char **line, size_t *len, FILE *fp) {
-    if (*line == NULL) {
-        *len = 128; // Initial buffer size, adjust as needed
-        *line = (char *)malloc(*len);
-        if (*line == NULL) {
-            perror("Memory allocation error");
-            exit(EXIT_FAILURE);
-        }
-    }
-
-    size_t i = 0;
-    int c;
-
-    while ((c = fgetc(fp)) != EOF && c != '\n') {
-        if (i == *len - 1) {
-            *len *= 2; // Double the buffer size if needed
-            *line = (char *)realloc(*line, *len);
-            if (*line == NULL) {
-                perror("Memory reallocation error");
-                exit(EXIT_FAILURE);
-            }
-        }
-        (*line)[i++] = (char)c;
-    }
-
-    if (c == EOF && i == 0) {
-        return -1; // No characters read, and end of file reached
-    }
-
-    (*line)[i] = '\0';
-    return i;
-}
 
 void send_file(const struct sockaddr_in *client_address,
                 int client_socket,
@@ -50,7 +22,7 @@ void send_file(const struct sockaddr_in *client_address,
                         "069 File not found.\r\n");
         return;
     }
-    while ((read = custom_getline(&line, &len, fp)) != -1) {
+    while ((read = getline(&line, &len, fp)) != -1) {
         send_at_recv(client_address, client_socket, client_ip, line);
     }
     fclose(fp);

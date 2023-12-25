@@ -1,89 +1,36 @@
+/*
+** EPITECH PROJECT, 2022
+** server_functions.c
+** File description:
+** server_functions.c
+*/
+
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "../include/server.h"
 
-#ifdef _WIN32
-    #include <winsock2.h>
-    #include <ws2tcpip.h>
-    #include <windows.h>
-#else
-    #include <sys/socket.h>
-    #include <netinet/in.h>
-    #include <arpa/inet.h>
-    #include <unistd.h>
-    #include <sys/types.h>
-    #include <sys/wait.h>
-    #include <string.h>
-    #include <stdio.h>
-    #include <stdlib.h>
-#endif
-
-void fork_function(char *buffer, const int *client_socket, const char *client_ip, srv_s *srv)
+void fork_function(char *buffer,
+                    const int *client_socket,
+                    const char *client_ip, srv_s *srv)
 {
-#ifdef _WIN32
-    // Use CreateProcess for Windows
-    STARTUPINFO si;
-    PROCESS_INFORMATION pi;
-
-    ZeroMemory(&si, sizeof(si));
-    si.cb = sizeof(si);
-    ZeroMemory(&pi, sizeof(pi));
-
-    // Create the child process.
-    if (!CreateProcess(NULL,   // No module name (use command line)
-                       "child_process_executable",  // Replace with the actual executable name for the child process
-                       NULL,   // Process handle not inheritable
-                       NULL,   // Thread handle not inheritable
-                       FALSE,  // Set handle inheritance to FALSE
-                       0,      // No creation flags
-                       NULL,   // Use parent's environment block
-                       NULL,   // Use parent's starting directory
-                       &si,    // Pointer to STARTUPINFO structure
-                       &pi))   // Pointer to PROCESS_INFORMATION structure
-    {
-        fprintf(stderr, "CreateProcess failed (%lu).\n", GetLastError());
-        exit(EXIT_FAILURE);
-    }
-
-    // Close process and thread handles.
-    CloseHandle(pi.hProcess);
-    CloseHandle(pi.hThread);
-#else
     pid_t serv_pid = fork();
     if (serv_pid == -1) {
         perror("Fork failed");
         exit(EXIT_FAILURE);
     } else if (serv_pid == 0) {
-        send_receive(buffer, *client_socket, client_ip, srv);
+        send_receive(buffer, *client_socket,
+                        client_ip, srv);
         close(*client_socket);
         exit(EXIT_SUCCESS);
     } else {
         close(*client_socket);
     }
-#endif
-    // Unused parameters, so no need to reference them to avoid warnings.
-    (void)buffer;
-    (void)client_socket;
-    (void)client_ip;
-    (void)srv;
 }
-
-
-// void fork_function(char *buffer,
-//                     const int *client_socket,
-//                     const char *client_ip, srv_s *srv)
-// {
-//     pid_t serv_pid = fork();
-//     if (serv_pid == -1) {
-//         perror("Fork failed");
-//         exit(EXIT_FAILURE);
-//     } else if (serv_pid == 0) {
-//         send_receive(buffer, *client_socket,
-//                         client_ip, srv);
-//         close(*client_socket);
-//         exit(EXIT_SUCCESS);
-//     } else {
-//         close(*client_socket);
-//     }
-// }
 
 void main_loop(srv_s *srv)
 {
