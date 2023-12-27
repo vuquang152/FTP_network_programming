@@ -4,12 +4,26 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <time.h>
 
 #define BUFFER_SIZE 1024
 
 void error(const char *msg) {
     perror(msg);
     exit(1);
+}
+
+void print_current_time() {
+    time_t rawtime;
+    struct tm *info;
+
+    time(&rawtime);
+    info = localtime(&rawtime);
+
+    char time_str[9]; // hh:mm:ss
+    strftime(time_str, sizeof(time_str), "%T", info);
+
+    printf("[%s] ", time_str);
 }
 
 int main(int argc, char *argv[]) {
@@ -46,6 +60,7 @@ int main(int argc, char *argv[]) {
     if (bytes_received < 0) {
         error("Error reading from socket");
     }
+    print_current_time();
     printf("%.*s", (int)bytes_received, buffer);
 
     // Main loop to interact with the server
@@ -61,10 +76,12 @@ int main(int argc, char *argv[]) {
         if (bytes_received < 0) {
             error("Error reading from socket");
         } else if (bytes_received == 0) {
+            print_current_time();
             printf("Connection closed by the server.\n");
             break;
         }
 
+        print_current_time();
         printf("%.*s", (int)bytes_received, buffer);
     }
 
