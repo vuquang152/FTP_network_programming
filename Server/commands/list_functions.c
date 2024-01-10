@@ -87,6 +87,6 @@ void list_files_active(const struct sockaddr_in *client_address,
         free(srv->files_names[i]);
     }
     send_at_recv(client_address, client_socket, client_ip,
-                response_messages[11]);
+                "\r\n");
     free(srv->files_names);
 }

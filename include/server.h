@@ -1,9 +1,3 @@
-/*
-** EPITECH PROJECT, 2023
-** Server.h
-** File description:
-** Server.h
-*/
 
 #pragma once
 
@@ -15,7 +9,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-
+//typedef struct sockaddr_in sockaddr_in;
 typedef struct srv_t {
     int port;
     int passive_port;
@@ -38,7 +32,8 @@ typedef struct srv_t {
     int nb_files;
     char **files_names;
     const char *filename;
-} srv_s;
+    char data_transfer_mode;
+ } srv_s;
 
 int bind_port(int port, int sockfd, int end_port);
 
@@ -163,3 +158,7 @@ void extra_bttf(const struct sockaddr_in *client_address, int client_socket,
 void
 loop_print_files(const struct sockaddr_in *client_address, int client_socket,
             const char *client_ip, const srv_s *srv);
+
+void handle_TYPE_command(const struct sockaddr_in *client_address,
+                          int client_socket,
+                          const char *client_ip, srv_s *srv);

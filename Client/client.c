@@ -67,6 +67,7 @@ int main(int argc, char *argv[]) {
     while (1) {
         printf("FTP> ");
         fgets(buffer, BUFFER_SIZE, stdin);
+        sleep(0.5);
         if (send(sockfd, buffer, strlen(buffer), 0) < 0) {
             error("Error sending data to the server");
         }

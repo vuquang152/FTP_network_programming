@@ -41,7 +41,7 @@ void main_loop(srv_s *srv)
         accept_connections(srv->sockfd, srv->client_ip,
         *srv->client_address,
         srv->client_socket);
-
+        //printf("CLient IP: %s",srv->client_ip);
         fork_function(srv->buffer,
         srv->client_socket,
         srv->client_ip, srv);

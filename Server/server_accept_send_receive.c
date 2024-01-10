@@ -20,7 +20,7 @@ void send_at_recv(const struct sockaddr_in *client_address, int client_socket,
 {
     int size_buff = strlen(response);
     int bytes_written = write(client_socket, response, size_buff);
-
+    //printf("CLient IP: %s\n",client_ip);
     if (bytes_written < 0) {
         perror("Write failed");
         exit(EXIT_FAILURE);
@@ -92,8 +92,8 @@ void accept_connections(int sockfd, char *client_ip,
         perror("Accept failed");
         exit(EXIT_FAILURE);
     }
-    inet_ntop(AF_INET, &client_address.sin_addr, client_ip,
-                sizeof(client_ip));
+    inet_ntop(AF_INET, &(client_address.sin_addr), client_ip, INET_ADDRSTRLEN);  
+    //printf("CLient IP: %s\n",client_ip);
     printf("Connection from %s:%d\n", client_ip,
             ntohs(client_address.sin_port));
     send_at_connection(&client_address, *client_socket, client_ip,
