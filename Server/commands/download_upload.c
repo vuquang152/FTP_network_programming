@@ -1,9 +1,4 @@
-/*
-** EPITECH PROJECT, 2022
-** download_upload.c
-** File description:
-** download_upload.c
-*/
+
 
 #include "../../include/server.h"
 #include "../../include/response_messages.h"

@@ -1,9 +1,4 @@
-/*
-** EPITECH PROJECT, 2022
-** list_functions.c
-** File description:
-** list_functions.c
-*/
+
 
 #include <sys/socket.h>
 #include <netinet/in.h>

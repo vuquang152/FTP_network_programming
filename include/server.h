@@ -9,6 +9,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#define BUFFER_SIZE 1024
 //typedef struct sockaddr_in sockaddr_in;
 typedef struct srv_t {
     int port;

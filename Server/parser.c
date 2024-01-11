@@ -1,9 +1,3 @@
-/*
-** EPITECH PROJECT, 2022
-** parser.c
-** File description:
-** parser.c
-*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,13 +22,11 @@ int running_functions(srv_s *srv, char *const *commands,
                     void (**fptr)(const struct sockaddr_in *, int,
                                     const char *, srv_s *))
 {
-    printf("inside running functions\n");
-    //printf("Command length: %zu\n", strlen(srv->command));
+
     if (srv->command == NULL)
         return 0;
+
     for (int i = 0; i < 15; i++) {
-        printf("-i: %d\n", i);
-        printf("srv->command: %s\n", srv->command);
         if (strcmp(srv->command, commands[i]) == 0) {
             fptr[i](srv->client_address, *srv->client_socket, srv->client_ip,
                     srv);
@@ -63,7 +55,6 @@ void parser(srv_s *srv)
             &upload_command, &noop_command, &handle_dele,
             &handle_TYPE_command};
     if (running_functions(srv, commands, fptr) != 1) {
-        printf("parser print\n");
         send_at_recv(srv->client_address, *srv->client_socket,
                     srv->client_ip, "500 Command not recognized.\r\n");
     }

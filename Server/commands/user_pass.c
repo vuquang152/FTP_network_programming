@@ -1,9 +1,3 @@
-/*
-** EPITECH PROJECT, 2022
-** user_pass.c
-** File description:
-** user_pass.c
-*/
 
 #include <sys/socket.h>
 #include <netinet/in.h>

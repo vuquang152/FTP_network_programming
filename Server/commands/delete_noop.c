@@ -1,9 +1,4 @@
-/*
-** EPITECH PROJECT, 2022
-** delete and noop.c
-** File description:
-** delete and noop.c
-*/
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -47,7 +42,7 @@ void handle_dele(const struct sockaddr_in *client_address, int client_socket,
         send_at_recv(client_address, client_socket, client_ip,
                     srv->filename);
         send_at_recv(client_address, client_socket, client_ip,
-                    ": No such file or directory.\\r\\n");
+                    ": No such file or directory.\r\n");
     } else {
         send_at_recv(client_address, client_socket, client_ip,
                     "250 Requested file action okay, completed.\r\n");

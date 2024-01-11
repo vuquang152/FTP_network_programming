@@ -1,9 +1,3 @@
-/*
-** EPITECH PROJECT, 2023
-** active_mode.c
-** File description:
-** active_mode.c
-*/
 
 #include <sys/socket.h>
 #include <netinet/in.h>

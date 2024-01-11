@@ -1,9 +1,3 @@
-/*
-** EPITECH PROJECT, 2022
-** passive_mode.c
-** File description:
-** passive_mode.c
-*/
 
 #include "../include/server.h"
 #include "../include/response_messages.h"
