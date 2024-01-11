@@ -1,9 +1,3 @@
-/*
-** EPITECH PROJECT, 2022
-** main.c
-** File description:
-** main.c
-*/
 
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -54,7 +48,6 @@ const char *response_messages[14] = {
 
 int main(int ac, char **av)
 {
-    printf("Server started\n");
     srv_s *srv = NULL;
     if (ac == 2 && strcmp(av[1], "-help") == 0) {
         printf("USAGE: "
@@ -70,7 +63,7 @@ int main(int ac, char **av)
     srv->port = atoi(av[1]);
     srv->max_pending_connections = 10;
 
-    printf("port %d\n", srv->port);
+    printf("Server started at port %d\n", srv->port);
     server(srv);
     return 0;
 }

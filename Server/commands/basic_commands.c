@@ -1,9 +1,3 @@
-/*
-** EPITECH PROJECT, 2022
-** Quit.c
-** File description:
-** Quit.c
-*/
 
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -101,3 +95,35 @@ void help_message(const struct sockaddr_in *client_address, int client_socket,
                     "530 DENIED not connected.\r\n");
     }
 }
+
+void handle_TYPE_command(const struct sockaddr_in *client_address,
+                          int client_socket,
+                          const char *client_ip, srv_s *srv) {
+    //printf("Inside handle_TYPE_command\n");
+    if (srv->is_connected == 1) {
+        // Get the argument of the TYPE command
+        char *command_type = strtok(NULL," ") ;
+        //printf("Received TYPE command. Argument: %s\n", typeArgument);
+        if(command_type != NULL && strcmp(command_type, "A") == 0) {
+            printf("Switching to ASCII mode.\n");
+            srv->data_transfer_mode = 'A';
+            send_at_recv(client_address, client_socket, client_ip, "200 Command okay.\r\n");
+        }
+        if(command_type != NULL && strcmp(command_type, "I") == 0){                    
+            printf("Switching to binary mode.\n");
+            srv->data_transfer_mode = 'I';
+            send_at_recv(client_address, client_socket, client_ip, "200 Command okay.\r\n");
+        }
+        // else{
+        //     printf("Invalid TYPE argument.\n");
+        //     send_at_recv(client_address, client_socket, client_ip,
+        //             "504 Command not implemented for that parameter.\r\n");
+        // }
+    }
+    else {
+        send_at_recv(client_address, client_socket, client_ip,
+                     "530 DENIED not connected.\r\n");
+    }
+}
+
+

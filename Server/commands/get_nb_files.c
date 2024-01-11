@@ -1,9 +1,4 @@
-/*
-** EPITECH PROJECT, 2022
-** get_nb_files.c
-** File description:
-** get_nb_files.c
-*/
+
 
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -52,10 +47,10 @@ void extra_bttf(const struct sockaddr_in *client_address, int client_socket,
 {
     if (srv->is_passive == 1) {
         send_at_recv(client_address, client_socket, client_ip,
-                    response_messages[9]);
+                    "");
         loop_print_files(client_address, client_socket, client_ip, srv);
         send_at_recv(client_address, client_socket, client_ip,
-                    response_messages[11]);
+                    "\r\n");
         free(srv->files_names);
     } else
         list_files_active(client_address, client_socket, client_ip, srv);

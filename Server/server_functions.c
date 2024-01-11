@@ -1,9 +1,3 @@
-/*
-** EPITECH PROJECT, 2022
-** server_functions.c
-** File description:
-** server_functions.c
-*/
 
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -41,7 +35,6 @@ void main_loop(srv_s *srv)
         accept_connections(srv->sockfd, srv->client_ip,
         *srv->client_address,
         srv->client_socket);
-
         fork_function(srv->buffer,
         srv->client_socket,
         srv->client_ip, srv);

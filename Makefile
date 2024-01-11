@@ -20,7 +20,7 @@ CLIENT_OBJS = $(CLIENT_SRC:.c=.o)
 
 RM = rm -f
 
-CFLAGS = -Wall -Wextra -Werror -I ./include
+CFLAGS = -Wall -Wextra -Werror -Wno-unused-parameter -I ./include
 
 SERVER_NAME = myftp_server
 CLIENT_NAME = myftp_client
