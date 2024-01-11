@@ -100,9 +100,9 @@ void accept_connections(int sockfd, char *client_ip,
         perror("Accept failed");
         exit(EXIT_FAILURE);
     }
-    inet_ntop(AF_INET, &(client_address.sin_addr), client_ip, INET_ADDRSTRLEN);  
-    print_current_time();
-    printf("Connection from [%s]:%d\n", client_ip,
+    inet_ntop(AF_INET, &client_address.sin_addr, client_ip,
+                sizeof(client_ip));
+    printf("Connection from %s:%d\n", client_ip,
             ntohs(client_address.sin_port));
     send_at_connection(&client_address, *client_socket, client_ip,
                         response_messages[0]);
